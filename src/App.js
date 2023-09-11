@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AlbumForm from './AlbumForm';
 import MusicForm from './MusicForm';
+import './App.css'; 
+
 
 function App() {
   const [showAlbumForm, setShowAlbumForm] = useState(false);

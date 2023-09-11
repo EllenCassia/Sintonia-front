@@ -3,7 +3,7 @@ import Select from 'react-select';
 
 const AlbumForm = ({ onAlbumSubmit }) => {
   const [title, setTitle] = useState('');
-  const [selectedGender, setSelectedGender] = useState(null); // Inicialmente nenhum gênero selecionado
+  const [selectedGender, setSelectedGender] = useState(null); 
   const [year, setYear] = useState('');
   const [artist, setArtist] = useState('');
 
@@ -25,7 +25,7 @@ const AlbumForm = ({ onAlbumSubmit }) => {
     e.preventDefault();
     const albumData = {
       title,
-      gender: selectedGender ? selectedGender.value : null, // Use o valor selecionado ou null se nenhum gênero for selecionado
+      gender: selectedGender ? selectedGender.value : null, 
       year,
       artist,
     };
