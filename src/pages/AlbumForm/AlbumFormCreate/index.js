@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 
 import { Container, Input, Button, ButtonText, Label } from './styles';
-import api from '../../services/api';
-import Form from '../../components/Form';
+import api from '../../../services/api';
+import Form from '../../../components/Form';
 
 export default function AlbumForm() {
   
@@ -91,7 +91,7 @@ export default function AlbumForm() {
         <ButtonText>Cadastrar</ButtonText>
       </Button>
       <Button onClick={()=>{
-        window.location.href = "/";
+        window.location.href = "/homealbum";
       }}>
         <ButtonText>Cancelar</ButtonText>
       </Button>

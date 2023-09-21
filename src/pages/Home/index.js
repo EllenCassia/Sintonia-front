@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Label, Container } from "../AlbumFormCreate/styles";
+import { Label, Container } from "./styles";
 
 export default function Home() {
     return (
