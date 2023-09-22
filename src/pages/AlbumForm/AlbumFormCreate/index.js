@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { Container, Input, Button, ButtonText, Label } from './styles';
 import api from '../../../services/api';
 import Form from '../../../components/Form';
+import { Link } from 'react-router-dom';
 
 export default function AlbumForm() {
   
@@ -34,7 +35,6 @@ export default function AlbumForm() {
             }
         });
         console.log(response);
-        alert('Album cadastrado com sucesso!');
     } catch (err) {
         console.error(err);
     }
@@ -87,14 +87,10 @@ export default function AlbumForm() {
         value={artist}
         onChange={(e) => setArtist(e.target.value)}
       />
-      <Button onClick={handleSubmit}>
-        <ButtonText>Cadastrar</ButtonText>
-      </Button>
-      <Button onClick={()=>{
-        window.location.href = "/homealbum";
-      }}>
-        <ButtonText>Cancelar</ButtonText>
-      </Button>
+      <Link to='/homealbum'>
+          <Button onClick={handleSubmit}><ButtonText>Cadastrar</ButtonText></Button>
+          <Button><ButtonText>Cancelar</ButtonText></Button>
+      </Link>    
     </Container>
   );
 }

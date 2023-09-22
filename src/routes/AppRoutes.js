@@ -7,6 +7,7 @@ import AlbumFormHome from "../pages/AlbumForm/AlbumFormHome/index";
 import MusicFormCreate from "../pages/MusicForm/MusicFormCreate/index";
 import AlbumFormCreate from "../pages/AlbumForm/AlbumFormCreate/index";
 import AlbumFormUpdate from "../pages/AlbumForm/AlbumFormUpdate/index";
+import MusicFormUptade from "../pages/MusicForm/MusicFormUptade/index";
 
 function AppRoutes() {
   return (
@@ -18,6 +19,7 @@ function AppRoutes() {
         <Route path="/music" element={<MusicFormCreate />} />
         <Route path="/album" element={<AlbumFormCreate />} />
         <Route path="/uptadealbum" element={<AlbumFormUpdate />}></Route>
+        <Route path="/uptademusic" element={<MusicFormUptade />}></Route>
       </Routes>
     </BrowserRouter>
   );

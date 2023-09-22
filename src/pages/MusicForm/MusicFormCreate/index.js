@@ -42,7 +42,6 @@ export default function MusicForm() {
         },
       });
       console.log(response);
-      alert('Música cadastrada com sucesso!');
     } catch (err) {
       console.error(err);
     }
@@ -101,10 +100,10 @@ export default function MusicForm() {
         onChange={(e) => setArtist(e.target.value)}
         placeholder="Artista"
       />
+    <Link to='/homemusic'>
       <Button onClick={handleSubmit}>
         <ButtonText>Cadastrar</ButtonText>
       </Button>
-      <Link to='/homemusic'>
         <Button>
           Cancelar
         </Button>

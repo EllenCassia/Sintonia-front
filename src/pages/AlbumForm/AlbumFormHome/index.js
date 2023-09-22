@@ -1,14 +1,13 @@
-import React,{useEffect, useState}from "react";
-
-import { Container,Button,Lista,ElementList} from "../../MusicForm/MusicFormHome/styles";
+import React, { useEffect, useState } from "react";
+import { Container, Button, Lista, ElementList } from "../AlbumFormHome/styles";
 import Form from "../../../components/Form";
 import api from "../../../services/api";
 import AlbumFormUpdate from "../AlbumFormUpdate/index";
-import { Link } from "react-router-dom";
-;
+import {Link} from "react-router-dom";
 
 function AlbumFormHome() {
   const [albuns, setAlbuns] = useState([]);
+  const [editAlbum, setEditAlbum] = useState(null);
 
   useEffect(() => {
     async function fetchAlbuns() {
@@ -41,7 +40,11 @@ function AlbumFormHome() {
   }
 
   function editarAlbum(album) {
-    <AlbumFormUpdate album={album}/>;
+    setEditAlbum(album);
+  }
+
+  function cancelarEdicao() {
+    setEditAlbum(null);
   }
 
   return (
@@ -49,19 +52,22 @@ function AlbumFormHome() {
       <Link to='/album'>
         <Button>Cadastrar Álbum</Button>
       </Link>
+      <br/>
       <Form title="Lista de Álbuns" />
-      <Lista>
-        {albuns.map((album) => (
-          <ElementList key={album.id}>
-            <p>Nome: {album.name}</p>
-            <p>Ano de Lançamento: {album.year}</p>
-            <p>Gênero: {album.gender}</p>
-            <p>Artista: {album.artist}</p>
-            <Button onClick={() => editarAlbum(album)}>Editar</Button>
-            <Button onClick={() => deleteAlbum(album)}>Excluir</Button>
-          </ElementList>
-        ))}
-      </Lista>
+      {!editAlbum ? (
+        <Lista>
+          {albuns.map((album) => (
+            <ElementList key={album.id}>
+              <p>Nome: {album.name}</p>
+              <p>Ano de Lançamento: {album.year}</p>
+              <p>Gênero: {album.gender}</p>
+              <p>Artista: {album.artist}</p>
+              <Button onClick={() => editarAlbum(album)}>Editar</Button>
+              <Button onClick={() => deleteAlbum(album)}>Excluir</Button>
+            </ElementList>
+          ))}
+        </Lista>
+      ) : <AlbumFormUpdate album={editAlbum} onCancel={cancelarEdicao}/>}
     </Container>
   );
 }

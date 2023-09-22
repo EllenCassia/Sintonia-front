@@ -3,8 +3,9 @@ import { Container, Button, Input, Label } from "../AlbumFormCreate/styles.js";
 import Form from "../../../components/Form";
 import Select from 'react-select';
 import { Link } from "react-router-dom";
+import api from "../../../services/api";
 
-export default function AlbumFormHome(props) {
+export default function AlbumFormHome({album, onCancel}) {
     const [titulo, setTitulo] = useState(''); 
     const [ano, setAno] = useState(''); 
     const [selectedGender, setSelectedGender] = useState(null);
@@ -25,16 +26,32 @@ export default function AlbumFormHome(props) {
     ];
 
     useEffect(() => {
-        if (props.album) {
-          setTitulo(props.album.title || ''); 
-          setAno(props.album.year || ''); 
-          setSelectedGender(props.album.gender || null);
-          setArtista(props.album.artist || '');
+        if (album) {
+          setTitulo(album.name || ''); 
+          setAno(album.year || ''); 
+          setSelectedGender({ value: album.gender, label: album.gender });
+          setArtista(album.artist || '');
         }
-      }, [props.album]);
+      }, [album]);
     
     const handleSubmit = () => {
-        
+        const albumData = {
+            title: titulo,
+            year: ano,
+            gender: selectedGender ? selectedGender.value : null,
+            artist: artista,
+        };
+        api.put(`/album/${album.id}`, albumData, 
+          { 
+            headers: {'Content-Type': 'application/json' } 
+          }
+        ).then((response) => {
+            alert('Álbum atualizado com sucesso!');
+            onCancel();
+            window.location.reload();
+        }).catch((err) => {
+            console.error(err);
+        });
     };
 
     return ( 
@@ -68,11 +85,11 @@ export default function AlbumFormHome(props) {
                 value={artista}
                 onChange={(e) => setArtista(e.target.value)}
             />
+            <Link to='/homealbum'>
             <Button onClick={handleSubmit}>
                 Cadastrar
             </Button>
-            <Link to='/homealbum'>
-            <Button>
+            <Button onClick={onCancel}>
                 Cancelar
             </Button>
             </Link>
