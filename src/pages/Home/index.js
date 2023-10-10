@@ -5,7 +5,6 @@ import {
     Footer,
   } from './styles';
   
-  // ...
   
   export default function HomePage() {
     return (

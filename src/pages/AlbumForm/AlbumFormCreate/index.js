@@ -5,6 +5,9 @@ import { Container, Input, Button, ButtonText, Label } from './styles';
 import api from '../../../services/api';
 import Form from '../../../components/Form';
 import { Link } from 'react-router-dom';
+import { showErrorMessage,showSucessMessage } from '../../../components/Toastr/Toastr';
+import { validate } from '../../../components/Validate/validate';
+
 
 export default function AlbumForm() {
   
@@ -29,12 +32,21 @@ export default function AlbumForm() {
 
   const onAlbumSubmit = async (albumData) => {
     try {
+        const errors = validate(title, selectedGender, artist, year);
+        
+        if (errors.length > 0) {
+          errors.forEach((message,index) => {
+            showErrorMessage(message);
+          });
+          return false;
+        }
         const response = await api.post('/album', albumData, {
             headers: {
                 'Content-Type': 'application/json',
             }
+        }).then((response) => {
+          showSucessMessage('Álbum cadastrado com sucesso!');
         });
-        console.log(response);
     } catch (err) {
         console.error(err);
     }

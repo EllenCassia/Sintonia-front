@@ -46,7 +46,6 @@ function AlbumFormHome() {
   function cancelarEdicao() {
     setEditAlbum(null);
   }
-
   return (
     <Container>
       <Link to='/album'>

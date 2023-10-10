@@ -4,6 +4,9 @@ import Form from "../../../components/Form";
 import Select from 'react-select';
 import { Link } from "react-router-dom";
 import api from "../../../services/api";
+import { showErrorMessage,showSucessMessage } from "../../../components/Toastr/Toastr.js";
+import { validate } from "../../../components/Validate/validate.js";
+
 
 export default function AlbumFormHome({album, onCancel}) {
     const [titulo, setTitulo] = useState(''); 
@@ -32,8 +35,9 @@ export default function AlbumFormHome({album, onCancel}) {
           setSelectedGender({ value: album.gender, label: album.gender });
           setArtista(album.artist || '');
         }
-      }, [album]);
-    
+      }, [album]
+    ); 
+      
     const handleSubmit = () => {
         const albumData = {
             title: titulo,
@@ -41,12 +45,21 @@ export default function AlbumFormHome({album, onCancel}) {
             gender: selectedGender ? selectedGender.value : null,
             artist: artista,
         };
+        const errors = validate(titulo, selectedGender, artista, ano);
+
+        if(errors.length > 0){
+            errors.forEach((message,index) =>{
+                showErrorMessage(message)
+            });
+            return false;
+        }
+
         api.put(`/album/${album.id}`, albumData, 
           { 
             headers: {'Content-Type': 'application/json' } 
           }
         ).then((response) => {
-            alert('Álbum atualizado com sucesso!');
+            showSucessMessage('Álbum atualizado com sucesso!')
             onCancel();
             window.location.reload();
         }).catch((err) => {

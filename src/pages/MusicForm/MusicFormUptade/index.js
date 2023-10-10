@@ -4,6 +4,8 @@ import Select from 'react-select';
 import { Container, Input, Button, ButtonText, Label} from '../../AlbumForm/AlbumFormCreate/styles.js';
 import Form from '../../../components/Form';
 import api from '../../../services/api';
+import { validate } from '../../../components/Validate/validate.js';
+import { showErrorMessage,showSucessMessage } from '../../../components/Toastr/Toastr';
 
 export default function MusicForm({music, onCancel}) {
   const [nome, setNome] = useState('');
@@ -67,12 +69,20 @@ export default function MusicForm({music, onCancel}) {
         album: albumData,
         artist: artista,
     };
+    const errors = validate(nome, selectedAlbum, artista, ano);
+        
+    if (errors.length > 0) {
+      errors.forEach((message,index) => {
+        showErrorMessage(message);
+      });
+      return false;
+    }
 
     api.put(`/music/${music.id}`, musicData, 
         { 
            headers: { 'Content-Type': 'application/json' } 
         }).then((response) => {
-            alert('Música atualizada com sucesso!');
+            showSucessMessage('Música atualizada com sucesso!');
             onCancel();
             window.location.reload();
            }

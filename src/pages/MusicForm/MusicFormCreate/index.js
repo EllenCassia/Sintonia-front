@@ -5,7 +5,8 @@ import { Container, Input, Button, ButtonText, Label} from '../../AlbumForm/Albu
 import Form from '../../../components/Form';
 import api from '../../../services/api';
 import { Link } from 'react-router-dom';
-
+import { validate } from '../../../components/Validate/validate.js';
+import { showErrorMessage,showSucessMessage } from '../../../components/Toastr/Toastr';
 
 export default function MusicForm() {
   const [name, setName] = useState('');
@@ -35,13 +36,21 @@ export default function MusicForm() {
   }, []);
 
   const onMusicSubmit = async (musicData) => {
+    const errors = validate(name, selectedAlbum, artist, year);
+        
+    if (errors.length > 0) {
+      errors.forEach((message,index) => {
+        showErrorMessage(message);
+      });
+      return false;
+    }
     try {
       const response = await api.post('/music', musicData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
+      showSucessMessage('Música cadastrada com sucesso!');
     } catch (err) {
       console.error(err);
     }
